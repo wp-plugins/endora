@@ -23,7 +23,6 @@ Pro lepší <b>začlenění do designu</b> byl vytvořen tento plugin, který do
 == Changelog ==
 
 = 0b =
-Jedná se o testovací verzi, která se postupen času změní na stabilní
 * Přidání menu nastavení
 * Přidána možnost widgetu
 * Přidát reálný náhled reklamy
