@@ -1,27 +1,29 @@
 ﻿=== Plugin Name ===
 Contributors: zeminem
 Donate link: http://www.zeminem.com/
-Tags: endora, widget
+Tags: endora, freehosting, widget, plugin
 Requires at least: 2.7
 Tested up to: 3.3.1
 Stable tag: 1.0
 
-Umožňuje jednoduché vkládání a editaci reklamy, kterou vkládá freehosting Endora.
+Umožňuje jednoduché ovládání a editaci reklamy, kterou vkládá freehosting Endora.
 
 == Description ==
 
-Umožňuje jednoduché vkládání a editaci reklamy, kterou vkládá freehosting Endora.
+Freehosting <a href="http://www.endora.cz/">Endora</a> poskytuje hostování webů zdarma. Jedna z podmínek je umístit reklamní patu.
+Pro lepší <b>začlenění do designu</b> byl vytvořen tento plugin, který dokáže reklamu vložit na předem určené místo v šabloně Wordpress webu.
 
 == Installation ==
 
-1. Upload `/endora/` file to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place widget in your templates
-4. SetUp plugin
+1. Nahrajte složku `/endora/` do `/wp-content/plugins/`
+2. Aktivujte plugin v menu Wordpressu
+3. Umístěte widget do šablony webu
+4. Plugin nastavte, a uložte hodnoty
 
 == Changelog ==
 
-= beta =
-* menu nastavení
-* možnost widgetu
-* reálný náhled
+= 0b =
+Jedná se o testovací verzi, která se postupen času změní na stabilní
+* Přidání menu nastavení
+* Přidána možnost widgetu
+* Přidát reálný náhled reklamy

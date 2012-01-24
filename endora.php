@@ -3,7 +3,7 @@
 Plugin Name: Endora
 Plugin URI:
 Description: Plugin freehostingu Endora umožňující snadnou editaci a umístění reklamy
-Version: 0b3
+Version: 0b4
 Author: Martin Zlámal
 Author URI: http://www.zeminem.cz/
 License: GPL2
@@ -76,14 +76,6 @@ wp_enqueue_script(jscolor, plugins_url('jscolor.js', __FILE__)); ?>
 <div style="color:<?php echo get_option('endora-barva-1'); ?>; background-color:<?php echo get_option('endora-barva-2'); ?>; font-size:<?php echo get_option('endora-velikost'); ?>px;"><a>Trenérská licence</a> pro trenéry kulturistiky|Novinka: <a>Jan Kraus</a> má svůj magazín|Zdravotní <a>matrace</a>, které napomáhají od bolesti zad - matrace UNAR|<b>Oblékáme se stylově</b> - <a>oblečení</a> a hip hop oblečení|Nábytek, <a>židle</a> a nábytkové doplňky na lino.cz</div>
 <h2>Reálný náhled reklamy</h2>
 <iframe src="<?php echo get_bloginfo('siteurl'); ?>/#endora" width="100%" height="500"></iframe>
-<?php
-$in = file('http://podpora.endora.cz/index.php/rss/');
-preg_match_all('~src="(.*)"~iU', $in, $out);
-print_r($out);
-/*foreach ($lines as $line_num => $line) {
-    echo "Line #<b>{$line_num}</b> : " . htmlspecialchars($line) . "<br />\n";
-}*/
-?>
 </div><!--wrap-->
 <?php } //endora_settings_page
 
