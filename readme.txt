@@ -1,6 +1,6 @@
 ﻿=== Plugin Name ===
 Contributors: zeminem
-Donate link: http://www.zeminem.com/
+Donate link: http://www.zeminem.cz/
 Tags: endora, freehosting, widget, plugin
 Requires at least: 2.7
 Tested up to: 3.3.1
