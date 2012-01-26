@@ -4,7 +4,7 @@ Donate link: http://www.zeminem.cz/
 Tags: endora, freehosting, widget, plugin
 Requires at least: 2.7
 Tested up to: 3.3.1
-Stable tag: 1.0
+Stable tag: 1.0.stable
 
 Umožňuje jednoduché ovládání a editaci reklamy, kterou vkládá freehosting Endora.
 
@@ -22,7 +22,12 @@ Pro lepší <b>začlenění do designu</b> byl vytvořen tento plugin, který do
 
 == Changelog ==
 
-= 0b =
+= 0bx =
 * Přidání menu nastavení
 * Přidána možnost widgetu
-* Přidát reálný náhled reklamy
+* Přidán reálný náhled reklamy
+* Nastavení barvy textu a pozadí
+* Nastavení písma a jeho velikosti
+* Nastavení zarovnání reklamy
+* Přidána nápověda
+* další drobné opravy a úpravy
