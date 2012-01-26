@@ -115,9 +115,9 @@ wp_enqueue_script(jscolor, plugins_url('jscolor.js', __FILE__)); ?>
     <input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
     </p>
 </form>
-<div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!</p><p><a class="button-secondary" href="https://webadmin.endora.cz/" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu</p></div>
+<div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!</p><p><a class="button-secondary" href="https://webadmin.endora.cz/" target="_blank" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu</p></div>
 <h2>Reálný náhled reklamy</h2>
-<iframe src="<?php echo get_bloginfo('siteurl'); ?>/#endora-wp" width="100%" height="200"></iframe>
+<iframe src="<?php echo get_bloginfo('siteurl'); ?>/#endora-wp" width="100%" height="300"></iframe>
 <div id="message" class="updated"><p>Nereaguje reklama na změny? Přesvědčte se, že máte v administraci Endora vypnuté nastavení reklamy a nastavujete ji pouze pomocí toho pluginu.<br />Našli jste chybu? <b>Nebojte se</b> to oznámit na email <b>mrtnzlml@gmail.com</b>. Na opravě se pak bude rychle pracovat, ale musím o ní vědět.</p></div>
 </div><!--wrap-->
 <?php } //endora_settings_page
@@ -165,9 +165,9 @@ function contextual_help($text) {
 $screen = $_GET['page'];
 if ($screen == 'endora/endora.php') {
 	$text = "<h5>Potřebujete více informací, nebo rad ohledně tohoto pluginu?</h5>";
-	$text .= "<p>Obraťte se ne fórum podpory freehostingu <a href=\"http://www.endora.cz/\"Endora</p>";
-	$text .= "<a href=\"http://podpora.endora.cz/\">Fórum podpory</a>";
+	$text .= "<p>Obraťte se ne fórum podpory freehostingu <a href=\"http://www.endora.cz/\" target=\"_blank\">Endora</a></p>";
+	$text .= "<a href=\"http://podpora.endora.cz/\" target=\"_blank\">Fórum podpory</a>";
 	$text .= "<h5>Další užitečné odkazy</h5>";
-	$text .= "<a href=\"http://www.endora.cz/\">freehosting Endora</a><br /><a href=\"http://webadmin.endora.cz/\">administrace Endory</a>";
+	$text .= "<a href=\"http://www.endora.cz/\" target=\"_blank\">freehosting Endora</a><br /><a href=\"http://webadmin.endora.cz/\" target=\"_blank\">administrace Endory</a>";
 }return $text;}
 ?>
