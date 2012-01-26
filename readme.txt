@@ -22,7 +22,7 @@ Pro lepší <b>začlenění do designu</b> byl vytvořen tento plugin, který do
 
 == Changelog ==
 
-= 0bx =
+= 0b* =
 * Přidání menu nastavení
 * Přidána možnost widgetu
 * Přidán reálný náhled reklamy
