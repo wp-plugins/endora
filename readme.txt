@@ -22,7 +22,7 @@ Pro lepší <b>začlenění do designu</b> byl vytvořen tento plugin, který do
 
 == Changelog ==
 
-= 1.x.stable =
+= 1.*.stable =
 * Verze 0b5 překlopena na 1.0.stable
 
 = 0b* =
