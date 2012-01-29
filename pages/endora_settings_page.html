@@ -1,0 +1,66 @@
+﻿<div class="wrap">
+	<h2>Nastavení reklamy</h2>
+	<div id="message" class="updated"><p>Nezapomeňte, že toto nastavení má smysl pouze pokud je Endora widget <a href="<?php echo get_bloginfo('siteurl').'/wp-admin/widgets.php'; ?>">umístěn</a>.</p></div>
+	<form method="post" action="options.php" name="nastaveni">
+		<?php
+		settings_fields('endora-settings-group' );
+		do_settings_fields('endora-settings-group', 'endora-settings-group' );
+		?>
+		<table>
+			<tr valign="top">
+				<th scope="row" align="right">Barva textu</th>
+				 <td><input type="text" name="endora-barva-1" value="<?php echo get_option('endora-barva-1'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+				 <td class="poznamka">Např. #000000</td>
+				<th scope="row" align="right">Velikost písma</th>
+				 <td><select name="endora-velikost" style="width: 188px"><!-- OnChange="document.nastaveni.submit()" -->
+				 <?php
+				 for ( $i = 10; $i <= 20; $i=$i+2 ) echo "<option value='$i' " . ( get_option('endora-velikost') == $i ? "selected='selected'" : '' ) . ">$i px</option>";
+				 ?>
+				 </select></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right">Barva odkazů</th>
+				 <td><input type="text" name="endora-barva-2" value="<?php echo get_option('endora-barva-2'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+				 <td class="poznamka">Např. #000FFF</td>
+				<th scope="row" align="right">Zarovnání reklamy</th>
+				 <td><select name="endora-zarovnani" style="width: 188px">
+					<option value="left" <?php if(get_option('endora-zarovnani')=='left')echo'selected="yes"'; ?>>Left</option>
+					<option value="right" <?php if(get_option('endora-zarovnani')=='right')echo'selected="yes"'; ?>>Right</option>
+					<option value="center" <?php if(get_option('endora-zarovnani')=='center')echo'selected="yes"'; ?>>Center</option>
+				 </select></td>
+			</tr>
+			<tr valign="top">
+				<th scope="row" align="right">Barva pozadí</th>
+				 <td><input type="text" name="endora-barva-3" value="<?php echo get_option('endora-barva-3'); ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+				 <td class="poznamka">Např. #FFFFFF</td>
+				<th scope="row" align="right">Písmo reklamy</th>
+				 <td><select name="endora-pismo" style="width: 188px">
+					<option value="sans-serif" <?php if(get_option('endora-pismo')=='sans-serif')echo'selected="yes"'; ?>>Arial – Helvetica</option>
+					<option value="Palatino, 'palatino linotype', serif" <?php if(get_option('endora-pismo')=='Palatino, \'palatino linotype\', serif')echo'selected="yes"'; ?>>Palatino</option>
+					<option value="'Comic Sans MS', 'Sand CE', fantasy" <?php if(get_option('endora-pismo')=='\'Comic Sans MS\', \'Sand CE\', fantasy')echo'selected="yes"'; ?>>Comic Sans</option>
+					<option value="monospace" <?php if(get_option('endora-pismo')=='monospace')echo'selected="yes"'; ?>>Courier</option>
+					<option value="Verdana, 'Geneva CE', lucida, sans-serif" <?php if(get_option('endora-pismo')=='Verdana, \'Geneva CE\', lucida, sans-serif')echo'selected="yes"'; ?>>Verdana</option>
+				 </select></td>
+				 <td class="poznamka">
+				 <?php
+				 $pismo=get_option('endora-pismo');
+				 switch($pismo){
+					case'sans-serif':echo'základní bezpatkové písmo';break;
+					case'Palatino, \'palatino linotype\', serif':echo'elegantní patkové písmo';break;
+					case'\'Comic Sans MS\', \'Sand CE\', fantasy':echo'veselé oblé znaky';break;
+					case'monospace':echo'neproporciální písmo';break;
+					case'Verdana, \'Geneva CE\', lucida, sans-serif':echo'o 10% širší obdoba Tahomy';break;
+				 }
+				 ?>
+				 </td>
+			</tr>
+		</table>
+		<p class="submit">
+			<input type="submit" class="button-primary" value="<?php _e('Uložit') ?>" />
+		</p>
+	</form>
+	<div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!</p><p><a class="button-secondary" href="https://webadmin.endora.cz/" target="_blank" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu</p></div>
+	<h2>Reálný náhled reklamy</h2>
+	<iframe src="<?php echo get_bloginfo('siteurl'); ?>/#reklama-wplugin" width="100%" height="300"></iframe>
+	<div id="message" class="updated"><p>Nereaguje reklama na změny? Přesvědčte se, že máte v administraci Endora vypnuté nastavení reklamy a nastavujete ji pouze pomocí toho pluginu.<br />Našli jste chybu? <b>Nebojte se</b> to oznámit na email <b>mrtnzlml@gmail.com</b>. Na opravě se pak bude rychle pracovat, ale musím o ní vědět.</p></div>
+</div><!--wrap-->
