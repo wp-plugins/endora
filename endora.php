@@ -126,7 +126,7 @@ wp_enqueue_script(jscolor, plugins_url('jscolor.js', __FILE__)); /* v2.6 */ ?>
 </form>
 <div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!</p><p><a class="button-secondary" href="https://webadmin.endora.cz/" target="_blank" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu</p></div>
 <h2>Reálný náhled reklamy</h2>
-<iframe src="<?php echo get_bloginfo('siteurl'); ?>/#reklama-wplugin" width="100%" height="300"></iframe>
+<iframe src="<?php echo get_bloginfo('siteurl'); ?>" width="100%" height="300"></iframe>
 <div id="message" class="updated"><p>Nereaguje reklama na změny? Přesvědčte se, že máte v administraci Endora vypnuté nastavení reklamy a nastavujete ji pouze pomocí toho pluginu.<br />Našli jste chybu? <b>Nebojte se</b> to oznámit na email <b>mrtnzlml@gmail.com</b>. Na opravě se pak bude rychle pracovat, ale musím o ní vědět.</p></div>
 </div><!--wrap-->
 <?php } //endora_settings_page
