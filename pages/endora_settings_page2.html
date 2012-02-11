@@ -1,0 +1,16 @@
+﻿<?php
+$items = get_option('endora-rss-count');
+wp_widget_rss_output('http://www.endora.cz/rss', array('items'=>$items, 'show_summary'=>1, 'show_author'=>0, 'show_date'=>1)); ?>
+<h2>Nastavení RSS</h2>
+<form method="post" action="options.php" name="nastaveni">
+<?php settings_fields('endora-settings-group3'); do_settings_fields('endora-settings-group3', 'endora-settings-group3'); ?>
+<table>
+	<tr>
+		<td align="right">Počet zobrazovaných novinek</td>
+		<td><select name="endora-rss-count" style="width: 100px">
+		<?php for ( $i = 1; $i <= 10; $i++ ) echo "<option value='$i' " . ( get_option('endora-rss-count') == $i ? "selected='selected'" : '' ) . ">$i</option>"; ?>
+		</select></td>
+	</tr>
+</table>
+<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Uložit') ?>" /></p></td>
+</form>
