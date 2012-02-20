@@ -1,58 +1,74 @@
-﻿<?php if(!is_active_widget(false, false, 'widg01end', false)) { ?><div id="message" class="error"><p>Byla zjištěna chyba, která nedovoluje zobrazit nastavení reklamy z administrace Wordpress.</p><p>Prosím <a href="<?php echo get_bloginfo('siteurl').'/wp-admin/widgets.php' ?>">umístěte</a> widget <b>Endora reklama</b>, který zajistí správné vložení reklamy. Pak bude možné pokračovat...</p></div>
-<?php } else { ?>
-<form method="post" action="options.php" name="nastaveni">
-<?php settings_fields('endora-settings-group1'); do_settings_fields('endora-settings-group1', 'endora-settings-group1'); ?>
+﻿<?php if(!is_active_widget(false, false, ENDORA_WIDGET_ID1, false)) { echo '<div id="message" class="error"><p>Byla zjištěna chyba, která nedovoluje zobrazit nastavení reklamy z administrace Wordpress.</p><p>Prosím <a href="' . get_bloginfo('siteurl').'/wp-admin/widgets.php' . '">umístěte</a> widget <b>Endora reklama</b>, který zajistí správné vložení reklamy. Pak bude možné pokračovat...</p></div>';
+} else { 
+$data = get_option('endora_reklama');
+if(!is_array($data)) {
+	$data = array('barva1'=>'#FF0000', 'barva2'=>'#00FF00', 'barva3'=>'#0000FF', 'velikost'=>14);
+	update_option('endora_reklama', $data);
+}
+if($_POST['endora_submit_reklama']) {
+	$data['barva1'] = $_POST['endora_barva1'];
+	$data['barva2'] = $_POST['endora_barva2'];
+	$data['barva3'] = $_POST['endora_barva3'];
+	$data['velikost'] = $_POST['endora_velikost'];
+	$data['zarovnani'] = $_POST['endora_zarovnani'];
+	$data['pismo'] = $_POST['endora_pismo'];
+	$data['transparent'] = $_POST['endora_transparent'];
+	if($data['barva3']==$data['barva1'] || $data['barva3']==$data['barva2']) echo '<div id="message" class="error"><p>Barva pozadí nemůže být stejná jako barva odkazů, nebo textu.</p></div>';
+	else update_option('endora_reklama', $data);
+}
+?>
+<form method="post">
 	<table>
-		<tr valign="top">
+		<tr>
 			<th scope="row" align="right">Barva textu</th>
-				<td><input type="text" name="endora-barva-1" value="<?php echo get_option('endora-barva-1'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+				<td><input type="text" name="endora_barva1" value="<?php echo $data['barva1']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 				<td class="poznamka">Např. #000000</td>
 			<th scope="row" align="right">Velikost písma</th>
-				<td><select name="endora-velikost" style="width: 188px"><!-- OnChange="document.nastaveni.submit()" -->
-				<?php for ( $i = 10; $i <= 20; $i=$i+2 ) echo "<option value='$i' " . ( get_option('endora-velikost') == $i ? "selected='selected'" : '' ) . ">$i px</option>"; ?>
+				<td><select name="endora_velikost" style="width: 188px">
+				<?php for ( $i = 10; $i <= 20; $i=$i+2 ) echo "<option value='$i' " . ( $data['velikost'] == $i ? "selected='selected'" : '' ) . ">$i px</option>"; ?>
 				</select></td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<th scope="row" align="right">Barva odkazů</th>
-				<td><input type="text" name="endora-barva-2" value="<?php echo get_option('endora-barva-2'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
-				<td class="poznamka">Např. #000FFF</td>
+				<td><input type="text" name="endora_barva2" value="<?php echo $data['barva2']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+				<td class="poznamka"></td>
 			<th scope="row" align="right">Zarovnání reklamy</th>
-				<td><select name="endora-zarovnani" style="width: 188px">
-					<option value="left" <?php if(get_option('endora-zarovnani')=='left')echo'selected="yes"'; ?>>Left</option>
-					<option value="right" <?php if(get_option('endora-zarovnani')=='right')echo'selected="yes"'; ?>>Right</option>
-					<option value="center" <?php if(get_option('endora-zarovnani')=='center')echo'selected="yes"'; ?>>Center</option>
+				<td><select name="endora_zarovnani" style="width: 188px">
+					<option value="left" <?php if($data['zarovnani']=='left')echo'selected="yes"'; ?>>Left</option>
+					<option value="right" <?php if($data['zarovnani']=='right')echo'selected="yes"'; ?>>Right</option>
+					<option value="center" <?php if($data['zarovnani']=='center')echo'selected="yes"'; ?>>Center</option>
 					</select></td>
 		</tr>
-		<tr valign="top">
+		<tr>
 			<th scope="row" align="right">Barva pozadí</th>
-				<td><input type="text" name="endora-barva-3" value="<?php echo get_option('endora-barva-3'); ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
-				<td class="poznamka">Např. #FFFFFF</td>
+				<td><input type="text" name="endora_barva3" value="<?php echo $data['barva3']; ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}"<?php if($data['transparent']==1) echo ' disabled="true"'; ?> /></td>
+				<td><input type="checkbox" name="endora_transparent" value="1"<?php if($data['transparent']==1) echo ' checked'; ?> /> Transparentní</td>
 			<th scope="row" align="right">Písmo reklamy</th>
-				<td><select name="endora-pismo" style="width: 188px">
-					<option value="sans-serif" <?php if(get_option('endora-pismo')=='sans-serif')echo'selected="yes"'; ?>>Arial – Helvetica</option>
-					<option value="Palatino, 'palatino linotype', serif" <?php if(get_option('endora-pismo')=='Palatino, \'palatino linotype\', serif')echo'selected="yes"'; ?>>Palatino</option>
-					<option value="'Comic Sans MS', 'Sand CE', fantasy" <?php if(get_option('endora-pismo')=='\'Comic Sans MS\', \'Sand CE\', fantasy')echo'selected="yes"'; ?>>Comic Sans</option>
-					<option value="monospace" <?php if(get_option('endora-pismo')=='monospace')echo'selected="yes"'; ?>>Courier</option>
-					<option value="Verdana, 'Geneva CE', lucida, sans-serif" <?php if(get_option('endora-pismo')=='Verdana, \'Geneva CE\', lucida, sans-serif')echo'selected="yes"'; ?>>Verdana</option>
+				<td><select name="endora_pismo" style="width: 188px">
+					<option value="" <?php if($data['pismo']=='')echo'selected="yes"'; ?>>Použít písmo webu</option>
+					<option value="sans-serif" <?php if($data['pismo']=='sans-serif')echo'selected="yes"'; ?>>Arial – Helvetica</option>
+					<option value="Palatino, serif" <?php if($data['pismo']=='Palatino, serif')echo'selected="yes"'; ?>>Palatino</option>
+					<option value="fantasy" <?php if($data['pismo']=='fantasy')echo'selected="yes"'; ?>>Comic Sans</option>
+					<option value="monospace" <?php if($data['pismo']=='monospace')echo'selected="yes"'; ?>>Courier</option>
+					<option value="Verdana, lucida, sans-serif" <?php if($data['pismo']=='Verdana, lucida, sans-serif')echo'selected="yes"'; ?>>Verdana</option>
 					</select></td>
 				<td class="poznamka">
 					<?php
-					$pismo = get_option('endora-pismo');
-					switch($pismo){
+					switch($data['pismo']){
 					case'sans-serif':echo'základní bezpatkové písmo';break;
-					case'Palatino, \'palatino linotype\', serif':echo'elegantní patkové písmo';break;
-					case'\'Comic Sans MS\', \'Sand CE\', fantasy':echo'veselé oblé znaky';break;
+					case'Palatino, serif':echo'elegantní patkové písmo';break;
+					case'fantasy':echo'veselé oblé znaky';break;
 					case'monospace':echo'neproporciální písmo';break;
-					case'Verdana, \'Geneva CE\', lucida, sans-serif':echo'o 10% širší obdoba Tahomy';break;}
+					case'Verdana, lucida, sans-serif':echo'o 10% širší obdoba Tahomy';break;}
 					?></td>
 		</tr>
 	</table>
-	<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Uložit') ?>" /></p>
+	<p><input type="submit" class="button-primary" name="endora_submit_reklama"  value="<?php _e('Uložit') ?>" /></p>
 </form>
-<?php if(get_option('endora-api-mod')=='true') { ?>
-<div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!</p><p><a class="button-secondary" href="https://webadmin.endora.cz/" target="_blank" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu<br />3) vkládat reklamní patu</p></div>
+<?php if($data['upraveno']==NULL || $data['upraveno']=='ano') { ?>
+<div id="message" class="updated"><p>Pokud je reklama nastavena v administračním rozhraní Endory, nastavení na této stránce <strong>nebude</strong> fungovat!<span style="float: right;">( <a href="?page=endora/endora.php&tab=reklama&zobraz=ne">tuto zprávu příště nezobrazovat</a> )</span></p><p><a class="button-secondary" href="https://webadmin.endora.cz/" target="_blank" title="Administrace">Ručně deaktivovat reklamu v administraci Endora!</a></p><p>Deaktivování znamená v administraci nastavit:<br />1) používat styl webu<br />2) <b>necentrovat</b> reklamu<br />3) vkládat reklamní patu</p></div>
 <?php } ?>
 <h2>Reálný náhled reklamy</h2>
-	<iframe src="<?php echo get_bloginfo('siteurl'); ?>" width="100%" height="300"></iframe>
+<iframe src="<?php echo get_bloginfo('siteurl'); ?>" width="100%" height="300"></iframe>
 <div id="message" class="updated"><p>Nereaguje reklama na změny? Přesvědčte se, že máte v administraci Endora vypnuté nastavení reklamy a nastavujete ji pouze pomocí toho pluginu.<br />Našli jste chybu? <b>Nebojte se</b> to oznámit na email <b>mrtnzlml@gmail.com</b>. Na opravě se pak bude rychle pracovat, ale musím o ní vědět.</p></div>
-<?php } //konec hlavního if/else ?>
+<?php } //!is_active_widget() ?>

@@ -1,47 +1,75 @@
-﻿<form method="post" action="options.php" name="nastaveni">
-<?php settings_fields('endora-settings-group2'); do_settings_fields('endora-settings-group2', 'endora-settings-group2'); ?>
-	<b><font color="red" size="3">API klíč: </font></b><input type="text" name="endora-api" value="<?php echo get_option('endora-api'); ?>" size="70">
-	<h2>Nastavení widgetu:</h2>
+﻿<?php
+$data = get_option('endora_api');
+if(!is_array($data)) {
+	$data = array('barva1'=>'#000000', 'barva2'=>'#DDDDDD', 'barva3'=>'#CCCCCC', 'barva4'=>'#FF0000', 'barva5'=>'#FFA500', 'barva6'=>'#008000');
+	update_option('endora_api', $data);
+}
+if($_POST['endora_submit_api']) {
+	$data['api'] = $_POST['endora_api'];
+	$data['disk'] = $_POST['endora_api_disk'];
+	$data['traff'] = $_POST['endora_api_traff'];
+	$data['prog'] = $_POST['endora_api_prog'];
+	$data['graf'] = $_POST['endora_api_graf'];
+	$data['rohy'] = $_POST['endora_api_rohy'];
+	$data['padding'] = $_POST['endora_api_padding'];
+	$data['barva1'] = $_POST['endora_api_barva1'];
+	$data['barva2'] = $_POST['endora_api_barva2'];
+	$data['barva3'] = $_POST['endora_api_barva3'];
+	$data['barva4'] = $_POST['endora_api_barva4'];
+	$data['barva5'] = $_POST['endora_api_barva5'];
+	$data['barva6'] = $_POST['endora_api_barva6'];
+	$data['transparent'] = $_POST['endora_api_transparent'];
+	update_option('endora_api', $data);
+}
+?>
+<form method="post">
+<?php if(!is_active_widget(false, false, ENDORA_WIDGET_ID2, false)) {
+echo '<div id="message" class="error" style="width: 50% !important;"><p>Widget <b>Endora informace</b> není <a href="' . get_bloginfo('siteurl').'/wp-admin/widgets.php' . '">umístěn</a>.</p></div><br />';
+} ?>
+<b><font color="red" size="3">API klíč: </font></b><input type="text" name="endora_api" value="<?php echo $data['api']; ?>" size="70" style="border: #FF0000 1px solid;">
+<h2>Nastavení widgetu:</h2>
 <table>
 	<tr>
 		<td align="right">Zobrazovat informace o disku</td>
-		<td width="100px"><input type="checkbox" name="endora-api-disk" value="disk"<?php if(get_option('endora-api-disk')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Barva textu'); ?></td>
-		<td><input type="text" name="endora-api-barva-1" value="<?php echo get_option('endora-api-barva-1'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td width="60px"><input type="checkbox" name="endora_api_disk" value="1"<?php if($data['disk']==1) echo ' checked'; ?>></td>
+		<td align="right">Barva textu</td>
+		<td><input type="text" name="endora_api_barva1" value="<?php echo $data['barva1']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 	</tr><tr>
 		<td align="right">Zobrazovat informace o trafficu</td>
-		<td><input type="checkbox" name="endora-api-traf" value="traf"<?php if(get_option('endora-api-traf')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Barva pozadí'); ?></td>
-		<td><input type="text" name="endora-api-barva-2" value="<?php echo get_option('endora-api-barva-2'); ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td><input type="checkbox" name="endora_api_traff" value="1"<?php if($data['traff']==1) echo ' checked'; ?>></td>
+		<td align="right">Barva pozadí</td>
+		<td><input type="text" name="endora_api_barva2" value="<?php echo $data['barva2']; ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}"<?php if($data['transparent']==1) echo ' disabled="true"'; ?> />
+			<input type="checkbox" name="endora_api_transparent" value="1"<?php if($data['transparent']==1) echo ' checked'; ?> /> Transparentní</td>
 	</tr><tr>
 		<td align="right">Zobrazovat informace o programu</td>
-		<td><input type="checkbox" name="endora-api-prog" value="prog"<?php if(get_option('endora-api-prog')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Progress pozadí'); ?></td>
-		<td><input type="text" name="endora-api-barva-3" value="<?php echo get_option('endora-api-barva-3'); ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td><input type="checkbox" name="endora_api_prog" value="1"<?php if($data['prog']==1) echo ' checked'; ?>></td>
+		<td align="right">Progress pozadí</td>
+		<td><input type="text" name="endora_api_barva3" value="<?php echo $data['barva3']; ?>" class="color {pickerMode:'HSV',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 	</tr><tr>
 		<td align="right">Zobrazovat grafické znázornění</td>
-		<td><input type="checkbox" name="endora-api-graf" value="graf"<?php if(get_option('endora-api-graf')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Progress barva 1'); ?></td>
-		<td><input type="text" name="endora-api-barva-4" value="<?php echo get_option('endora-api-barva-4'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td><input type="checkbox" name="endora_api_graf" value="1"<?php if($data['graf']==1) echo ' checked'; ?>></td>
+		<td align="right">Progress barva 1</td>
+		<td><input type="text" name="endora_api_barva4" value="<?php echo $data['barva4']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 	</tr><tr>
 		<td align="right">Zaoblit progress barům rohy</td>
-		<td><input type="checkbox" name="endora-api-radius" value="radius"<?php if(get_option('endora-api-radius')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Progress barva 2'); ?></td>
-		<td><input type="text" name="endora-api-barva-5" value="<?php echo get_option('endora-api-barva-5'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td><input type="checkbox" name="endora_api_rohy" value="1"<?php if($data['rohy']==1) echo ' checked'; ?>></td>
+		<td align="right">Progress barva 2</td>
+		<td><input type="text" name="endora_api_barva5" value="<?php echo $data['barva5']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 	</tr><tr>
 		<td align="right">Aktivovat na webu padding</td>
-		<td><input type="checkbox" name="endora-api-padding" value="padding"<?php if(get_option('endora-api-padding')) echo ' checked'; ?>></td>
-		<td align="right"><?php echo __('Progress barva 3'); ?></td>
-		<td><input type="text" name="endora-api-barva-6" value="<?php echo get_option('endora-api-barva-6'); ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
+		<td><input type="checkbox" name="endora_api_padding" value="1"<?php if($data['padding']==1) echo ' checked'; ?>></td>
+		<td align="right">Progress barva 3</td>
+		<td><input type="text" name="endora_api_barva6" value="<?php echo $data['barva6']; ?>" class="color {pickerMode:'HVS',hash:true,pickerFaceColor:'transparent',pickerBorder:0,pickerInsetColor:'black'}" /></td>
 	</tr>
 </table>
-<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Uložit') ?>" /></p></td>
+<p><input type="submit" class="button-primary" name="endora_submit_api"  value="<?php _e('Uložit') ?>" /></p>
 </form>
 <div id="info-wplugin-admin"><?php
-$api = get_option('endora-api');
+$api = $data['api'];
 //curl($api, $graf, $disk, $traf, $prog)
 curl($api, 1, 1, 1, 1);
-echo '<br />Progress bar (85%):<div class="meter red"><span style="width: 85%"></span></div>';
+echo '<h3>Náhled progress barů</h3>';
+echo 'Progress bar (85%):<div class="meter red"><span style="width: 85%"></span></div>';
 echo 'Progress bar (55%):<div class="meter orange"><span style="width: 55%"></span></div>';
 echo 'Progress bar (30%):<div class="meter green"><span style="width: 30%"></span></div>';
 ?></div>

@@ -1,16 +1,30 @@
 ﻿<?php
-$items = get_option('endora-rss-count');
-wp_widget_rss_output('http://www.endora.cz/rss', array('items'=>$items, 'show_summary'=>1, 'show_author'=>0, 'show_date'=>1)); ?>
+$data = get_option('endora_rss');
+if(!is_array($data)) {
+	$data = array('items'=>8, 'summary'=>1, 'author'=>0, 'date'=>1);
+	update_option('endora_rss', $data);
+}
+if($_POST['endora_submit_rss']) {
+	$data['items'] = $_POST['endora_rss_count'];
+	$data['summary'] = $_POST['endora_rss_nahled'];
+	$data['date'] = $_POST['endora_rss_datum'];
+	update_option('endora_rss', $data);
+}
+wp_widget_rss_output('http://endora.cz/rss/index2', array('items'=>$data['items'], 'show_summary'=>$data['summary'], 'show_author'=>$data['author'], 'show_date'=>$data['date']));
+?>
 <h2>Nastavení RSS</h2>
-<form method="post" action="options.php" name="nastaveni">
-<?php settings_fields('endora-settings-group3'); do_settings_fields('endora-settings-group3', 'endora-settings-group3'); ?>
+<form method="post">
 <table>
 	<tr>
-		<td align="right">Počet zobrazovaných novinek</td>
-		<td><select name="endora-rss-count" style="width: 100px">
-		<?php for ( $i = 1; $i <= 10; $i++ ) echo "<option value='$i' " . ( get_option('endora-rss-count') == $i ? "selected='selected'" : '' ) . ">$i</option>"; ?>
+		<td align="right">Počet zde zobrazovaných novinek</td>
+		<td><select name="endora_rss_count" style="width: 50px">
+		<?php for ( $i = 1; $i <= 10; $i++ ) echo "<option value='$i' " . ( $data['items'] == $i ? "selected='selected'" : '' ) . ">$i</option>"; ?>
 		</select></td>
+	</tr><tr>
+		<td>Zobrazovat náhled <input type="checkbox" name="endora_rss_nahled" value="1"<?php if($data['summary']==1) echo ' checked'; ?> /></td>
+	</tr><tr>
+		<td>Zobrazovat datum <input type="checkbox" name="endora_rss_datum" value="1"<?php if($data['date']==1) echo ' checked'; ?> /></td>
 	</tr>
 </table>
-<p class="submit"><input type="submit" class="button-primary" value="<?php _e('Uložit') ?>" /></p></td>
+<p><input type="submit" class="button-primary" name="endora_submit_rss" value="<?php _e('Uložit') ?>" /></p>
 </form>
