@@ -1,4 +1,4 @@
-﻿=== Plugin Name ===
+=== Plugin Name ===
 Contributors: zeminem
 Donate link: http://www.zeminem.cz/
 Tags: endora, freehosting, widget, plugin
@@ -31,6 +31,11 @@ Obsazené místo / Maximální prostor pro web na disku, traffic webu a jeho max
 6. I tento plugin nastavte a uložte hodnoty
 
 == Changelog ==
+
+= 15.03.2013 =
+* Opraveny chyby při současném použití pluginu Endora a Endora-Lite
+* Přidáno přepínání mezi pluginy
+* drobné úpravy v návaznosti na změnu API
 
 = 20.02.2012 =
 * Verze 1.*.stable překlopena na 20.02.2012

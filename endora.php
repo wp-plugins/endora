@@ -3,11 +3,13 @@
 Plugin Name: Endora
 Plugin URI:
 Description: Plugin freehostingu Endora umožňující snadnou editaci a umístění reklamy.
-Version: 20.02.2012
+Version: 15.03.2013
 Author: Martin Zlámal
 Author URI: http://www.zeminem.cz/
 License: GPLv2
 */
+
+/** @version 15.03.2013 - update by Roman Chlebnicek */
 
 /** @version 12.02.2012 */
 define(ENDORA_WIDGET_ID1, 'endora_widget_reklama');
@@ -26,9 +28,13 @@ add_action('admin_menu', 'endora_create_menu');
 add_action('plugins_loaded', 'endora_widget_init');
 add_action('wp_dashboard_setup', 'endora_dash_rss'); //poradi dash widgetu urci i poradi na dasboardu (POZPATKU!)
 add_action('wp_dashboard_setup', 'endora_dash_api');
-//////////////////////////////////////////////////
-/** !!! ZPETNA VAZBA, V DALSI VERZI SMAZAT !!! */
+
+/** @version 15.03.2013 */
 function endora_pluginInstall() {
+	if( is_plugin_active('endora-lite/endora.php') ){
+		add_action('update_option_active_plugins', 'deactivate_endora_lite');
+     }
+/*
 	delete_option('endora-barva-1');
 	delete_option('endora-barva-2');
 	delete_option('endora-barva-3');
@@ -52,20 +58,34 @@ function endora_pluginInstall() {
 	delete_option('endora-rss-count');
 	delete_option('widget_widg01end');
 	delete_option('widget_widg02end');
+*/
 }
-/** @version 14.02.2012 */
+
+/** @version 15.03.2013 */
 function endora_pluginUninstall() {
-	delete_option('endora_widget_reklama');
-	delete_option('endora_widget_info');
-	delete_option('endora_reklama');
+/*
+	if( is_plugin_active('endora/endora.php') ){
+		delete_option('endora_widget_reklama');
+		delete_option('endora_widget_info');
+		delete_option('endora_reklama');
+		delete_option('endora_api');
+	}
+*/
 	delete_option('endora_rss');
-	delete_option('endora_api');
 	delete_option('endora_dash_rss');
 	delete_option('endora_dash_api');
 }
-//////////////////////////////////////////////////
+
+/** @version 15.03.2013 */
+function deactivate_endora_lite(){
+	deactivate_plugins('endora-lite/endora.php');
+}
+
 /** @version 12.02.2012 */
-function endora_create_menu() { add_menu_page('Endora Nastavení', 'Endora Nastavení', 'administrator', __FILE__, /*fce*/'endora_settings_page', plugins_url('endora/img/endora.png', dirname(__FILE__))); }
+function endora_create_menu() {
+	add_menu_page('Endora Nastavení', 'Endora Nastavení', 'administrator', __FILE__, /*fce*/'endora_settings_page', plugins_url('endora/img/endora.png', dirname(__FILE__)));
+}
+
 /** @version 12.02.2012 */
 function endora_settings_page() {
 	wp_enqueue_script('jscolor', plugins_url('js/jscolor.js', __FILE__));
@@ -87,7 +107,7 @@ function endora_settings_page() {
 		update_option('endora_reklama', $data);
 	}
 }
-//////////////////////////////////////////////////
+
 /** @version 12.02.2012 */
 function endora_widget_init() {
 	// unique widget id | widget name | callback function | array option
@@ -128,7 +148,10 @@ function endora_widget_info($args) {
 	echo $after_widget;
 }
 /** @version 12.02.2012 */
-function endora_widget_info_control() { endora_widget_reklama_control(true); }
+function endora_widget_info_control() {
+	endora_widget_reklama_control(true);
+}
+
 /** @version 12.02.2012 */
 function endora_widget_reklama_control($informace=false) {
 	$informace==false ? $options = get_option(ENDORA_WIDGET_ID1) : $options = get_option(ENDORA_WIDGET_ID2);
@@ -143,9 +166,12 @@ function endora_widget_reklama_control($informace=false) {
 		<input type="hidden" id="endora_widget_reklama_control_submit" name="endora_widget_reklama_control_submit" value="x" />
 	</p><?php
 }
-//////////////////////////////////////////////////
+
 /** @version 14.02.2012 */
-function endora_dash_rss() { wp_add_dashboard_widget('endora-rss', 'Endora novinky', /*fce1*/'endora_dash_rss_output', /*fce1*/'endora_dash_rss_setting'); seradDash('endora-rss'); }
+function endora_dash_rss() {
+	wp_add_dashboard_widget('endora-rss', 'Endora novinky', /*fce1*/'endora_dash_rss_output', /*fce1*/'endora_dash_rss_setting'); seradDash('endora-rss');
+}
+
 /** @version 14.02.2012 */
 function endora_dash_rss_output() {
 	$data = get_option('endora_dash_rss');
@@ -155,6 +181,7 @@ function endora_dash_rss_output() {
 	}
 	wp_widget_rss_output('http://endora.cz/rss/index2', array('items'=>$data['items'], 'show_summary'=>$data['summary'], 'show_author'=>$data['author'], 'show_date'=>$data['date']));
 }
+
 /** @version 14.02.2012 */
 function endora_dash_rss_setting() {
 	$options = get_option('endora_dash_rss');
@@ -173,8 +200,12 @@ function endora_dash_rss_setting() {
 		<input type="hidden" id="endora_dash_rss_send" name="endora_dash_rss_send" value="x" />
 	</p><?php
 }
+
 /** @version 15.02.2012 */
-function endora_dash_api() { wp_add_dashboard_widget('endora-api', 'Endora informace', /*fce1*/'endora_dash_api_output', /*fce1*/'endora_dash_api_setting'); seradDash('endora-api'); }
+function endora_dash_api() {
+	wp_add_dashboard_widget('endora-api', 'Endora informace', /*fce1*/'endora_dash_api_output', /*fce1*/'endora_dash_api_setting'); seradDash('endora-api');
+}
+
 /** @version 15.02.2012 */
 function endora_dash_api_output() {
 	$data = get_option('endora_api');
@@ -192,6 +223,7 @@ function endora_dash_api_output() {
 	}
 	echo '<div style="float: right;">( <a href="?page=endora/endora.php&tab=info">administrace</a> )</div><br />';
 }
+
 /** @version 15.02.2012 */
 function endora_dash_api_setting() {
 	$options = get_option('endora_dash_api');
@@ -210,8 +242,8 @@ function endora_dash_api_setting() {
 		<input type="hidden" id="endora_dash_api_send" name="endora_dash_api_send" value="x" />
 	</p><?php
 }
-//////////////////////////////////////////////////
-/** @version 10.02.2012 */
+
+/** @version 15.03.2013 */
 function curl($api, $graf=1, $disk, $traf, $prog) {
 	if (!function_exists('curl_init')) { wp_die('Sorry cURL is not installed!'); }
 	$c = curl_init();
@@ -238,14 +270,21 @@ function curl($api, $graf=1, $disk, $traf, $prog) {
 		}
 	} if($prog) {
 		$program = $json['variant']['program'];
-		if($json['variant']=='default') {
-			$program = 'Free';
+		if($program == 'Free' OR $program == 'Lite') {
 			echo 'Program: ' . $program . '<br />';
 		} else {
-			echo 'Program: ' . $program . ' (platný do ' . $json['variant']['expire'] . ')<br />';
+			echo 'Program: ' . $program . ' (platný do ' . MyDateToDate($json['variant']['expire']) . ')<br />';
 		}
 	}
 }
+
+/** @version 15.03.2013 */
+function MyDateToDate ($datum = "") {
+	if ($datum == "") return "-";
+	$mydatum = explode("-", $datum);
+	return (int)$mydatum['2'] . ".&nbsp;" . (int)$mydatum['1'] . ".&nbsp;" . (int)$mydatum['0'];  // vrati datum ve forme dd. mm. rrrr (j. n. Y)
+}
+
 /** @version 10.02.2012 */
 function graf($str1, $str2) {
 	$mb = str_replace('MB', '', $str1);
@@ -260,6 +299,7 @@ function graf($str1, $str2) {
 	else $col = 'red';
 	echo '<div class="meter '.$col.'"><span style="width: '.$proc.'%"></span></div>';
 }
+
 /** @version 15.02.2012 */
 function seradDash($id) {
 	global $wp_meta_boxes;
